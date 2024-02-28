@@ -8,7 +8,14 @@ Given a dark matter halo and its galaxies, creates a graph with information abou
 
 See the paper [arXiv:2111.08683](https://arxiv.org/abs/2111.08683) for more details, and [arXiv:2111.14874](https://arxiv.org/abs/2111.14874) for an application of these networks to weigh the total masses of the Milky Way and Andromeda.
 
-<img src="visualize_graph.png" width="500">
+<!-- <img src="visualize_graph.png" width="500"> -->
+
+## *EGNN variation
+
+To run the training/evaluation, run `main.py` with the following modifications.
+- In `Source/constants.py`, modify the data path.
+- In `Hyperparameters/*.py`, modify the hyperparameters. 
+- In Line 80 of `main.py`, select the data to be trained on. 
 
 
 ## Scripts
