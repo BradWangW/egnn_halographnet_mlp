@@ -76,7 +76,7 @@ if __name__ == "__main__":
             os.mkdir(path)
 
     # Load default parameters
-    from Hyperparameters.params_TNG_CV import params
+    from Hyperparameters.params_SIMBA_CV import params
     
     print(params)
     
