@@ -135,8 +135,14 @@ class EGNN(nn.Module):
         self.hidden_nf = hidden_nf
         self.device = device
         self.n_layers = n_layers
-        self.embedding_in = nn.Linear(in_node_nf, self.hidden_nf)
-        self.embedding_out = nn.Linear(self.hidden_nf, out_node_nf)
+        self.embedding_in = nn.Sequential(
+            nn.Linear(in_node_nf, self.hidden_nf), 
+            act_fn
+        )
+        self.embedding_out = nn.Sequential(
+            nn.Linear(self.hidden_nf, out_node_nf), 
+            act_fn
+        )
         for i in range(0, n_layers):
             self.add_module("gcl_%d" % i, E_GCL(self.hidden_nf, self.hidden_nf, self.hidden_nf, edges_in_d=in_edge_nf,
                                                 act_fn=act_fn, residual=residual, attention=attention,

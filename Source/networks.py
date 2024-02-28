@@ -243,7 +243,8 @@ class ModelGNN(torch.nn.Module):
                 hidden_nf=hidden_channels, 
                 out_node_nf=latent_channels, 
                 in_edge_nf=1,
-                n_layers=n_layers
+                n_layers=n_layers,
+                act_fn=ReLU()
             )
         
         else:
@@ -263,7 +264,8 @@ class ModelGNN(torch.nn.Module):
                     lay = E_GCL(input_nf=in_channels,
                                 output_nf=latent_channels,
                                 hidden_nf=hidden_channels,
-                                edges_in_d=1)
+                                edges_in_d=1,
+                                act_fn=ReLU())
 
                 elif use_model=="GCN":
                     lay = GCNConv(in_channels, latent_channels)
