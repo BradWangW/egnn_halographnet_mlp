@@ -9,7 +9,6 @@ from Source.networks import *
 from Source.training import *
 from Source.plotting import *
 from Source.load_data import *
-from egnn_pytorch import EGNN
 
 # Main routine to train the neural net
 # If testsuite==True, it takes a model already pretrained in the other suite and tests it in the selected one
