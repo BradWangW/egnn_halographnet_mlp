@@ -8,6 +8,7 @@ from Source.constants import *
 from scipy.spatial.transform import Rotation as Rot
 from tqdm import tqdm
 from Source.egnn_clean import get_edges_batch
+import time
 
 # For perfoming symbolic regression, L1 regularization of messages is required
 # Inputs and messages are also stored
@@ -76,9 +77,9 @@ def test(loader, model, params, message_reg=sym_reg):
 
     errs = []
     loss_tot = 0
+    time_ini = time.time()
     for data in loader:  # Iterate in batches over the training/test dataset.
         with torch.no_grad():
-
             data.to(device)
             out = model(data)  # Perform a single forward pass.
             y_out, err_out = out[:,0], abs(out[:,1])     # Take mean and standard deviation of the output
@@ -114,6 +115,8 @@ def test(loader, model, params, message_reg=sym_reg):
                 messgs = np.append(messgs, maxmes.detach().cpu().numpy(), 0)
                 pools = np.append(pools, maxpool.detach().cpu().numpy(), 0)
 
+
+    print("Finished testing inference. Time elapsed:", time.time()-time_ini)
 
     # Save true values and predictions
     np.save("Outputs/outputs_"+namemodel(params)+".npy",outs)
