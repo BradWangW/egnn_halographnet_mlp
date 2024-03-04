@@ -175,7 +175,8 @@ def create_dataset(simsuite = "IllustrisTNG", simset = "CV", n_sims = 27):
                 graph = Data(x=torch.tensor(newtab, dtype=torch.float32), 
                              pos=torch.tensor(tab_halo[:,:3], dtype=torch.float32), 
                              y=torch.tensor(np.log10(HaloMass[ind]), dtype=torch.float32), 
-                             u=torch.tensor(u, dtype=torch.float))
+                             u=torch.tensor(u, dtype=torch.float),
+                             vel=torch.tensor(tab_halo[:,-3:], dtype=torch.float32))
 
                 # Update the total number of subhalos
                 subs += graph.x.shape[0]

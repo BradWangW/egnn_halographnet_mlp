@@ -8,13 +8,15 @@
 #use_model = "DeepSet"
 # use_model = "GCN"
 # use_model = "EGNN"
-use_model = "EGCL"
+# use_model = "EGCL"
+# use_model = "EGNN_vel"
+use_model = "EGCL_vel"
 #use_model = "PointNet"
 #use_model = "EdgePoint"
 #use_model = "MetaNet"
 
 # Learning rate
-learning_rate = 0.00010992156998246198 * 5
+learning_rate = 0.00010992156998246198 * 20
 # Weight decay
 weight_decay = 3.840148429018425e-07
 # Number of layers of each graph layer

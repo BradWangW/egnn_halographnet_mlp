@@ -12,6 +12,7 @@ from torch_geometric.nn import global_mean_pool, global_max_pool, global_add_poo
 from torch_cluster import knn_graph, radius_graph
 from torch_scatter import scatter_mean, scatter_sum, scatter_max, scatter_min
 from Source.egnn_clean import E_GCL, EGNN, get_edges_batch
+from Source.egnn_vel import E_GCL_vel, EGNN_vel
 import numpy as np
 
 #------------------------------
@@ -246,6 +247,16 @@ class ModelGNN(torch.nn.Module):
                 n_layers=n_layers,
                 act_fn=ReLU()
             )
+            
+        elif use_model=='EGNN_vel':
+            self.layers = EGNN_vel(
+                in_node_nf=in_channels, 
+                hidden_nf=hidden_channels, 
+                out_node_nf=latent_channels, 
+                in_edge_nf=1, 
+                n_layers=n_layers,
+                act_fn=ReLU(), 
+            )
         
         else:
             layers = []
@@ -266,6 +277,13 @@ class ModelGNN(torch.nn.Module):
                                 hidden_nf=hidden_channels,
                                 edges_in_d=1,
                                 act_fn=ReLU())
+                    
+                elif use_model=='EGCL_vel':
+                    lay = E_GCL_vel(input_nf=in_channels,
+                                    output_nf=latent_channels,
+                                    hidden_nf=hidden_channels,
+                                    edges_in_d=1,
+                                    act_fn=ReLU())
 
                 elif use_model=="GCN":
                     lay = GCNConv(in_channels, latent_channels)
@@ -313,7 +331,7 @@ class ModelGNN(torch.nn.Module):
 
     def forward(self, data):
 
-        x, pos, batch, u = data.x, data.pos, data.batch, data.u
+        x, pos, batch, u, vel = data.x, data.pos, data.batch, data.u, data.vel
 
         # Get edges using positions by computing the kNNs or the neighbors within a radius
         #edge_index = knn_graph(pos, k=self.k_nn, batch=batch, loop=self.loop)
@@ -323,6 +341,8 @@ class ModelGNN(torch.nn.Module):
         # Start message passing
         if self.namemodel=="EGNN":
             x, pos = self.layers(h=x, x=pos, edges=edges, edge_attr=edge_attr)
+        elif self.namemodel=="EGNN_vel":
+            x, pos = self.layers(h=x, x=pos, edges=edges, vel=vel, edge_attr=edge_attr)
         else:
             for layer in self.layers:
                 if self.namemodel=="DeepSet":
@@ -333,6 +353,8 @@ class ModelGNN(torch.nn.Module):
                     x, dumb, u = layer(x, edge_index, None, u, batch)
                 elif self.namemodel=="EGCL":
                     x, pos, _ = layer(h=x, coord=pos, edge_index=edges, edge_attr=edge_attr)
+                elif self.namemodel=="EGCL_vel":
+                    x, pos, _ = layer(h=x, edge_index=edges, coord=pos, vel=vel, edge_attr=edge_attr)
                 else:
                     x = layer(x=x, edge_index=edge_index)
                 self.h = x
