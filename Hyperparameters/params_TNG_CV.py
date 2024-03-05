@@ -6,11 +6,11 @@
 
 # Choose the GNN architecture between "DeepSet", "GCN", "EdgeNet", "PointNet", "MetaNet"
 #use_model = "DeepSet"
-# use_model = "GCN"
+use_model = "GCN"
 # use_model = "EGNN"
 # use_model = "EGCL"
 # use_model = "EGNN_vel"
-use_model = "EGCL_vel"
+# use_model = "EGCL_vel"
 #use_model = "PointNet"
 #use_model = "EdgePoint"
 #use_model = "MetaNet"
