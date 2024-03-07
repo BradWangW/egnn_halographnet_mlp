@@ -332,11 +332,17 @@ class ModelGNN(torch.nn.Module):
     def forward(self, data):
 
         x, pos, batch, u, vel = data.x, data.pos, data.batch, data.u, data.vel
+        
+        if x.get_device()==-1:
+            device = torch.device('cpu')
+        else:
+            device = torch.device('cuda')
+            
 
         # Get edges using positions by computing the kNNs or the neighbors within a radius
         #edge_index = knn_graph(pos, k=self.k_nn, batch=batch, loop=self.loop)
         edge_index = radius_graph(pos, r=self.k_nn, batch=batch, loop=self.loop)
-        edges, edge_attr = get_edges_batch(n_nodes=x.shape[0], batch_size=1)
+        edges, edge_attr = get_edges_batch(n_nodes=x.shape[0], batch_size=1, device=device)
 
         # Start message passing
         if self.namemodel=="EGNN":

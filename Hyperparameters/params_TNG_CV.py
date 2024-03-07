@@ -6,8 +6,8 @@
 
 # Choose the GNN architecture between "DeepSet", "GCN", "EdgeNet", "PointNet", "MetaNet"
 #use_model = "DeepSet"
-use_model = "GCN"
-# use_model = "EGNN"
+# use_model = "GCN"
+use_model = "EGNN"
 # use_model = "EGCL"
 # use_model = "EGNN_vel"
 # use_model = "EGCL_vel"
@@ -16,7 +16,7 @@ use_model = "GCN"
 #use_model = "MetaNet"
 
 # Learning rate
-learning_rate = 0.00010992156998246198 * 20
+learning_rate = 0.00010992156998246198 * 10
 # Weight decay
 weight_decay = 3.840148429018425e-07
 # Number of layers of each graph layer
@@ -25,7 +25,7 @@ n_layers = 3
 k_nn = 0.14233421449747316
 
 # Number of epochs
-n_epochs = 50
+n_epochs = 100
 # If training, set to True, otherwise loads a pretrained model and tests it
 training = True
 # Simulation suite, choose between "IllustrisTNG" and "SIMBA"

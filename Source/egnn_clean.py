@@ -133,7 +133,14 @@ class EGNN(nn.Module):
 
         super(EGNN, self).__init__()
         self.hidden_nf = hidden_nf
-        self.device = device
+        
+        if torch.cuda.is_available():
+            print("CUDA Available")
+            self.device = torch.device('cuda')
+        else:
+            print('CUDA Not Available')
+            self.device = torch.device('cpu')
+            
         self.n_layers = n_layers
         self.embedding_in = nn.Sequential(
             nn.Linear(in_node_nf, self.hidden_nf), 
@@ -187,10 +194,10 @@ def get_edges(n_nodes):
     return edges
 
 
-def get_edges_batch(n_nodes, batch_size):
+def get_edges_batch(n_nodes, batch_size, device=torch.device('cpu')):
     edges = get_edges(n_nodes)
-    edge_attr = torch.ones(len(edges[0]) * batch_size, 1)
-    edges = [torch.LongTensor(edges[0]), torch.LongTensor(edges[1])]
+    edge_attr = torch.ones(len(edges[0]) * batch_size, 1).to(device=device)
+    edges = [torch.LongTensor(edges[0]).to(device=device), torch.LongTensor(edges[1]).to(device=device)]
     if batch_size == 1:
         return edges, edge_attr
     elif batch_size > 1:
@@ -198,7 +205,7 @@ def get_edges_batch(n_nodes, batch_size):
         for i in range(batch_size):
             rows.append(edges[0] + n_nodes * i)
             cols.append(edges[1] + n_nodes * i)
-        edges = [torch.cat(rows), torch.cat(cols)]
+        edges = [torch.cat(rows).to(device=device), torch.cat(cols).to(device=device)]
     return edges, edge_attr
 
 def get_edges_attr(n_nodes):
