@@ -6,8 +6,8 @@
 
 # Choose the GNN architecture between "DeepSet", "GCN", "EdgeNet", "PointNet", "MetaNet"
 #use_model = "DeepSet"
-# use_model = "GCN"
-use_model = "EGNN"
+use_model = "GCN"
+# use_model = "EGNN"
 # use_model = "EGCL"
 # use_model = "EGNN_vel"
 # use_model = "EGCL_vel"
@@ -25,7 +25,7 @@ n_layers = 3
 k_nn = 0.14233421449747316
 
 # Number of epochs
-n_epochs = 100
+n_epochs = 1
 # If training, set to True, otherwise loads a pretrained model and tests it
 training = True
 # Simulation suite, choose between "IllustrisTNG" and "SIMBA"

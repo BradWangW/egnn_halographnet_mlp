@@ -4,7 +4,7 @@
 # Last update: 10/11/21
 #----------------------------------------------------
 
-import time, datetime, psutil
+import time, datetime, psutil, os, glob
 from Source.networks import *
 from Source.training import *
 from Source.plotting import *
@@ -83,3 +83,13 @@ if __name__ == "__main__":
     main(params)
 
     print("Finished. Time elapsed:",datetime.timedelta(seconds=time.time()-time_ini))
+
+    # Rename the latest two file
+    list_of_files = glob.glob('Plots/*')
+    list_of_files.sort(key=os.path.getctime, reverse=True)
+    
+    for latest_file in list_of_files[:2]:
+        os.rename(
+            latest_file, 
+            latest_file[:-4]+'_t_'+ str(round(time.time() - time_ini)) + 's.png'
+        )

@@ -20,7 +20,7 @@ random.seed(12345)
 hred = 0.7
 
 # Root path for simulations
-simpathroot = "F:/UOE/MScAI/MLP/data_camel/"
+simpathroot = "/afs/inf.ed.ac.uk/user/s19/s1962031/Documents/UoE/MLP/data_camel/"
 
 # Box size in comoving kpc/h
 boxsize = 25.e3
