@@ -235,6 +235,7 @@ class GlobalModel(torch.nn.Module):
 class ModelGNN(torch.nn.Module):
     def __init__(self, use_model, node_features, n_layers, k_nn, hidden_channels=300, latent_channels=100, loop=False):
         super(ModelGNN, self).__init__()
+        torch.cuda.empty_cache()
 
         # Graph layers
         in_channels = node_features

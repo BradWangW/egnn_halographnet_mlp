@@ -20,7 +20,7 @@ random.seed(12345)
 hred = 0.7
 
 # Root path for simulations
-simpathroot = "/Users/bradwang/Documents/UOE/MScAI/MLP/data_camel/"
+simpathroot = "/exports/eddie/scratch/s1962031/MLP/data_camel/"
 
 # Box size in comoving kpc/h
 boxsize = 25.e3
@@ -29,7 +29,7 @@ boxsize = 25.e3
 valid_size, test_size = 0.15, 0.15
 
 # Batch size
-batch_size = 32
+batch_size = 64
 
 # 1 if train for performing symbolic regression later, 0 otherwise
 sym_reg = 0

@@ -25,7 +25,7 @@ n_layers = 4
 k_nn = 0.14233421449747316
 
 # Number of epochs
-n_epochs = 100
+n_epochs = 1
 # If training, set to True, otherwise loads a pretrained model and tests it
 training = True
 # Simulation suite, choose between "IllustrisTNG" and "SIMBA"
@@ -36,6 +36,6 @@ simset = "CV"
 # Number of simulations considered, maximum 27 for CV and 1000 for LH
 n_sims = 27
 
-hidden_channels = 100
+hidden_channels = 128
 
 params = [use_model, learning_rate, weight_decay, n_layers, k_nn, n_epochs, training, simsuite, simset, n_sims, hidden_channels]

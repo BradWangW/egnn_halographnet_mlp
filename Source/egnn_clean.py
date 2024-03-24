@@ -154,6 +154,7 @@ class EGNN(nn.Module):
             self.add_module("gcl_%d" % i, E_GCL(self.hidden_nf, self.hidden_nf, self.hidden_nf, edges_in_d=in_edge_nf,
                                                 act_fn=act_fn, residual=residual, attention=attention,
                                                 normalize=normalize, tanh=tanh))
+        # self.to(torch.device('cpu'))
         self.to(self.device)
     
     def forward(self, h, x, edges, edge_attr):

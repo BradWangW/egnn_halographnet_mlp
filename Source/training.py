@@ -61,7 +61,7 @@ def train(loader, model, optimizer):
     return loss_tot/len(loader)
 
 # Testing/validation step
-def test(loader, model, params, message_reg=sym_reg):
+def test(loader, model, params, message_reg=sym_reg, de=False):
     model.eval()
 
     if model.namemodel=="PointNet":
@@ -119,18 +119,19 @@ def test(loader, model, params, message_reg=sym_reg):
     print("Finished testing inference. Time elapsed:", time.time()-time_ini)
 
     # Save true values and predictions
-    np.save("Outputs/outputs_"+namemodel(params)+".npy",outs)
-    np.save("Outputs/trues_"+namemodel(params)+".npy",trues)
-    np.save("Outputs/errors_"+namemodel(params)+".npy",yerrors)
+    suffix = de * '_de' + '.npy'
+    np.save("Outputs/outputs_"+namemodel(params)+suffix,outs)
+    np.save("Outputs/trues_"+namemodel(params)+suffix,trues)
+    np.save("Outputs/errors_"+namemodel(params)+suffix,yerrors)
 
     # If symbolic regression (pass otherwise)
     if message_reg and (model.namemodel=="PointNet" or model.namemodel=="EdgeNet"):
         inputs, messgs, pools, outs, trues = np.delete(inputs,0,0), np.delete(messgs,0,0), np.delete(pools,0,0), np.delete(outs,0,0), np.delete(trues,0,0)
-        np.save("Outputs/inputs_"+namemodel(params)+".npy",inputs)
-        np.save("Outputs/messages_"+namemodel(params)+".npy",messgs)
-        np.save("Outputs/poolings_"+namemodel(params)+".npy",pools)
+        np.save("Outputs/inputs_"+namemodel(params)+suffix,inputs)
+        np.save("Outputs/messages_"+namemodel(params)+suffix,messgs)
+        np.save("Outputs/poolings_"+namemodel(params)+suffix,pools)
 
-    return loss_tot/len(loader), np.array(errs).mean(axis=0)
+    return loss_tot/len(loader), np.array(errs).mean(axis=0), suffix
 
 # Training procedure
 def training_routine(model, train_loader, test_loader, params, verbose=True):

@@ -26,7 +26,7 @@ def plot_losses(train_losses, valid_losses, test_loss, err_min, params):
     plt.close()
 
 # Scatter plot of true vs predicted properties
-def plot_out_true_scatter(params, testsuite = False):
+def plot_out_true_scatter(params, testsuite = False, de = False, suffix='.npy'):
 
     figscat, axscat = plt.subplots()
     suite, simset = params[7], params[8]
@@ -34,9 +34,9 @@ def plot_out_true_scatter(params, testsuite = False):
     if testsuite: col = colorsuite(changesuite(suite))
 
     # Load true values and predicted means and standard deviations
-    outputs = np.load("Outputs/outputs_"+namemodel(params)+".npy")
-    trues = np.load("Outputs/trues_"+namemodel(params)+".npy")
-    errors = np.load("Outputs/errors_"+namemodel(params)+".npy")
+    outputs = np.load("Outputs/outputs_"+namemodel(params)+suffix)
+    trues = np.load("Outputs/trues_"+namemodel(params)+suffix)
+    errors = np.load("Outputs/errors_"+namemodel(params)+suffix)
 
     # There is a (0,0) initial point, fix it
     outputs = outputs[1:]
@@ -109,11 +109,16 @@ def plot_out_true_scatter(params, testsuite = False):
     axscat.grid()
 
     # Title, indicating which are the training and testing suites
+    if de:
+        simset1 = 'CV'
+        simset2 = 'LH'
+    else:
+        simset1 = simset2 = simset
     if testsuite:
-        titlefig = "Training in "+changesuite(suite)+" "+simset+", testing in "+suite+" "+simset
+        titlefig = "Training in "+changesuite(suite)+" "+simset1+", testing in "+suite+" "+simset2
         namefig = "out_true_testsuite_"+namemodel(params)
     else:
-        titlefig = "Training in "+suite+" "+simset+", testing in "+suite+" "+simset
+        titlefig = "Training in "+suite+" "+simset1+", testing in "+suite+" "+simset2
         namefig = "out_true_"+namemodel(params)
     axscat.set_title(titlefig)
 
