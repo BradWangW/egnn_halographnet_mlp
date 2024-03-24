@@ -54,13 +54,3 @@ The libraries required for training the models and compute some statistics are:
 * [Optuna](https://optuna.org/) (only for optimization in `hyperparams_optimization.py`)
 * [Astropy](https://www.astropy.org/) (only for MW and M31 data in `Source/galaxies.py`)
 * [Captum](https://captum.ai/) (only for interpretability in `captumtest.py`)
-
-
-## Usage
-
-These are some advices to employ the scripts described above:
-1. To perform a search of the optimal hyperparameters, run `hyperparams_optimization.py`.
-2. To train a model with a given set of parameters defined in `params.py`, run `main.py`.
-3. Once a model is trained, run `onlytest.py` to test in the training simulation suite and cross test it in the other one included in CAMELS (IllustrisTNG and SIMBA).
-4. Run `captumtest.py` to study the interpretability of the models, feature importance and saliency graphs.
-5. Run `halomass.py` to infer the mass of the Milky Way and Andromeda, whose data are defined in `Source/galaxies.py`. For this, note that only models without the stellar mass radius as feature are considered.
